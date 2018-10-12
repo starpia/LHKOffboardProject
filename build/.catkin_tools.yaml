@@ -1,0 +1,6 @@
+devel_space: /home/starpia/catkin_ws/src/modudculab_ros/devel
+install: false
+install_space: /home/starpia/catkin_ws/src/modudculab_ros/install
+profile: default
+source_space: /home/starpia/catkin_ws/src/modudculab_ros/src
+workspace: /home/starpia/catkin_ws/src/modudculab_ros

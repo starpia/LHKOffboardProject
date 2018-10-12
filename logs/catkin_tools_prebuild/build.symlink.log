@@ -1,0 +1,8 @@
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/./setup.bash
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/./_setup_util.py
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/./env.sh
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/./setup.zsh
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/./setup.sh
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake
+Symlinking /home/starpia/catkin_ws/src/modudculab_ros/devel/lib/pkgconfig/catkin_tools_prebuild.pc

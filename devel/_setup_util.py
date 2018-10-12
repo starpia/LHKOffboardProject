@@ -1,0 +1,1 @@
+/home/starpia/catkin_ws/src/modudculab_ros/devel/.private/catkin_tools_prebuild/_setup_util.py
