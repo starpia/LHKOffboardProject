@@ -74,7 +74,9 @@ int main(int argc, char **argv)
 
     ros::Time last_request = ros::Time::now();
     
-    double altitude = 2.0;
+    double altitude = 0.0;
+    bool isPeak = false;
+    bool isLand = true;
 
     while(ros::ok()){
         if( current_state.mode != "OFFBOARD" &&
@@ -96,44 +98,49 @@ int main(int argc, char **argv)
         }
 
         if(current_state.mode == "OFFBOARD" && 
-           current_state.armed)
+           current_state.armed &&
+           !isPeak)
         {
-            if(ros::Time::now() - last_request > ros::Duration(5.0))
+            ros::Duration dt = ros::Time::now() - last_request;
+            if(ros::Duration(5.0) < dt && dt < ros::Duration(10.0))
             {
-                if(altitude == 2.0)
+                altitude = 1.5; 
+                isLand = false;
+                //last_request = ros::Time::now();
+            }
+            else if(dt > ros::Duration(15.0))
+            {
+                isPeak = true;
+                last_request = ros::Time::now();
+            } 
+
+            //local_pos_pub.publish(pose);
+
+        }
+        else if(current_state.mode == "OFFBOARD" &&
+                current_state.armed &&
+                isPeak && !isLand)
+        {
+            ros::Duration dt = ros::Time::now() - last_request;
+            if(dt > ros::Duration(0.50))
+            {
+                altitude = altitude - 0.05;
+                if(altitude <= 0.0)
                 {
-                    ROS_INFO("HIGH");
-                    altitude = 4.0;
+                    isLand = true;
+                    //isPeak = false;
+                    altitude = 0.0;
+                    // Disarm 
+                    arm_cmd.request.value = false;
+                    arming_client.call(arm_cmd);
                 }
-                else
-                {
-                    ROS_INFO("LOW");
-                    altitude = 2.0;
-                }
-                
                 last_request = ros::Time::now();
             }
         }
-        
-        /*
-        if(count < 100)
-        {
-            //ROS_INFO("LOW");
-            altitude = 2.0;
-        }
-        else
-        {
-            //ROS_INFO("HIGH");
-            altitude = 4.0;
-        }
-        */
 
-    	pose.pose.position.x = 0;
+     	pose.pose.position.x = 0;
     	pose.pose.position.y = 0;
     	pose.pose.position.z = altitude;
-
-        //ROS_INFO("spinOnce");
-        count = count++;
 
         local_pos_pub.publish(pose);
         ros::spinOnce();
