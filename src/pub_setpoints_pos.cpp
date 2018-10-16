@@ -30,7 +30,7 @@ int main(int argc, char **argv)
        msg.header.frame_id = 1;
        msg.pose.position.x = 0.0;//0.001*some_object.position_x;
        msg.pose.position.y = 0.0;//0.001*some_object.position_y;
-       msg.pose.position.z = 1.0;//0.001*some_object.position_z;
+       msg.pose.position.z = 5.0;//0.001*some_object.position_z;
        msg.pose.orientation.x = 0;
        msg.pose.orientation.y = 0;
        msg.pose.orientation.z = 0;
