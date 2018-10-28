@@ -9,6 +9,7 @@
 #include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/State.h>
+#include <mavros_msgs/Thrust.h>
 #include "math.h"
 //#include <iostream>
 //#include <string>
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
             ("mavros/cmd/arming");
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
             ("mavros/set_mode");
+    ros::Publisher thr_pub = nh.advertise<mavros_msgs::Thrust>("mavros/setpoint_attitude/thrust", 10);
 
     //the setpoint publishing rate MUST be faster than 2Hz
     ros::Rate rate(20.0);
@@ -56,6 +58,9 @@ int main(int argc, char **argv)
     pose.pose.position.x = 0;
     pose.pose.position.y = 0;
     pose.pose.position.z = 2;
+
+    mavros_msgs::Thrust thr_cmd;
+    thr_cmd.thrust = 0.2;
 
     //send a few setpoints before starting
     for(int i = 100; ros::ok() && i > 0; --i){
@@ -142,6 +147,7 @@ int main(int argc, char **argv)
     	pose.pose.position.y = 0;
     	pose.pose.position.z = altitude;
 
+	thr_pub.publish(thr_cmd);
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
