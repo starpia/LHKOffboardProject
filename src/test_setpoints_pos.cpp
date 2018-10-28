@@ -64,6 +64,7 @@ int main(int argc, char **argv)
 
     //send a few setpoints before starting
     for(int i = 100; ros::ok() && i > 0; --i){
+        thr_pub.publish(thr_cmd);
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
@@ -147,7 +148,7 @@ int main(int argc, char **argv)
     	pose.pose.position.y = 0;
     	pose.pose.position.z = altitude;
 
-	thr_pub.publish(thr_cmd);
+        thr_pub.publish(thr_cmd);
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
